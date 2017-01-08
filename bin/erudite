@@ -25,7 +25,7 @@ var help = argv.h || argv.help;
 
 if (help || !fs.existsSync(filename)) {
   usage();
-  process.exit(1);
+  process.exit(help ? 0 : 1);
 }
 
 var src = erudite.parse(fs.readFileSync(filename, 'utf8'), {
