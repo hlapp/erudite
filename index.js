@@ -31,7 +31,7 @@ module.exports = erudite;
 // **parse** takes in Markdown `text`, extracts all indented and fenced code blocks,
 // returns the code blocks (concatenated; transpiled using [Babel](https://babeljs.io)).
 // Pass desired presets, plugins, and other [Babel options](https://babeljs.io/docs/core-packages/#options) in `opts`. No default presets etc are defined.
-function parse (text, opts) {
+ function parse (text, opts) {
   opts = assign({ eol: os.EOL }, opts);
 
   var SEPARATOR = opts.eol + opts.eol;
