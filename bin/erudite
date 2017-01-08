@@ -28,9 +28,11 @@ if (help || !fs.existsSync(filename)) {
   process.exit(1);
 }
 
-var src = erudite.parse(fs.readFileSync(filename, 'utf8'), {
-  stage: argv.stage
-});
+var presets = []; // presets must be installed in the calling environment
+                  // (whether local or global), so do not enforce any
+var opts = { presets: presets };
+if (argv.stage !== undefined) opts.presets.push('stage-' + argv.stage);
+var src = erudite.parse(fs.readFileSync(filename, 'utf8'), opts);
 
 if (argv.stdout) {
   return process.stdout.write(src);
