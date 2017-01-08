@@ -13,8 +13,12 @@ var usage = function () {
     '',
     '  -h, --help     show this help text',
     '  -o, --outfile  write to the given file path',
+    '      --preset   Babel preset to use (can be repeated)',
     '  -e, --stage    ECMAScript proposal stage (0-4)',
-    '      --stdout   write to stdout (ignores --outfile)'
+    '      --stdout   write to stdout (ignores --outfile)',
+    '',
+    'When specifying presets, these will need to be installed so they',
+    'can be loaded.'
   ].join('\n');
   process.stdout.write(helpText + '\n\n');
 };
@@ -28,8 +32,9 @@ if (help || !fs.existsSync(filename)) {
   process.exit(1);
 }
 
-var presets = []; // presets must be installed in the calling environment
-                  // (whether local or global), so do not enforce any
+var presets = argv.preset || []; // presets must be installed in the calling
+                                 // environment, so do not enforce any
+if ('string' === typeof presets) presets = [presets];
 var opts = { presets: presets };
 if (argv.stage !== undefined) opts.presets.push('stage-' + argv.stage);
 var src = erudite.parse(fs.readFileSync(filename, 'utf8'), opts);
